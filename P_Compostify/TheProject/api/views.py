@@ -32,3 +32,7 @@ def delete_task(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     except Task.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['GET'])
+def home(request):
+    return Response(status=status.HTTP_204_NO_CONTENT)

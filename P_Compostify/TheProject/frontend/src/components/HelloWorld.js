@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
 
 function HelloWorld() {
   const [message, setMessage] = useState('');
@@ -9,7 +13,7 @@ function HelloWorld() {
   const createTask = async (taskData) => {
     setIsLoading(true);
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/create-task/', taskData);
+        const response = await axios.post('http://127.0.0.1:8000/create-task/', taskData);
         if (response.status === 200) {
             const newTask = response.data;
             setTasks([...tasks, newTask]);
@@ -27,12 +31,27 @@ function HelloWorld() {
 };
 
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
+
+  const [theme] = useState(
+    Cookies.get('theme') === 'dark' ? darkTheme : lightTheme
+  );
 
 const fetchTasks = async () => {
   setIsLoading(true);
   try {
-    const response = await axios.get('http://127.0.0.1:8000/api/hello-world/');
+    const response = await axios.get('http://127.0.0.1:8000/hello-world/');
     setTasks(response.data);
     setMessage(response.data.message); 
   } catch (error) {
@@ -58,7 +77,7 @@ const fetchTasks = async () => {
   const handleTaskDeletion = async (taskId) => {
     setIsLoading(true);
     try {
-        const response = await axios.delete(`http://127.0.0.1:8000/api/delete-task/${taskId}/`);
+        const response = await axios.delete(`http://127.0.0.1:8000/delete-task/${taskId}/`);
         if (response.status === 204) {
             setTasks(tasks.filter(task => task.id !== taskId));
             setMessage('Task deleted successfully!');
@@ -75,6 +94,7 @@ const fetchTasks = async () => {
 };
 
   return (
+    <ThemeProvider theme={theme}>
     <main>
       <header>
         <h1>Hello, World!</h1>
@@ -103,6 +123,7 @@ const fetchTasks = async () => {
         <p>Footer content goes here</p>
       </footer>
     </main>
+    </ThemeProvider>
   );
 }
 
