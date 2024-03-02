@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Pages/home.tsx';
+import Home from './components/pages/home.tsx';
+
 import HelloWorld from './components/HelloWorld';
 import Cookies from 'js-cookie';
 
