@@ -22,7 +22,7 @@ class order(models.Model):
     quality = models.CharField(max_length = 255)
     amount = models.IntegerField()
     price = models.FloatField()
-    destiny = models.CharField()
+    destiny = models.CharField(max_length=255)
     type = models.SmallIntegerField()
 
     def __str__(self):
